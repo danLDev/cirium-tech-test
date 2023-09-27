@@ -1,7 +1,6 @@
 import { Flight } from "../models/flight";
 import { GATWICK_TO_GENEVA_DIRECT } from "../__mocks__/mock-flight-paths";
-import { addHours, addMinutes, millisecondsToMinutes } from "date-fns";
-import { getPointBetweenCoordinatesAtDistance } from "../utils/get-point-between-coordinates-at-distance";
+import { addHours, millisecondsToMinutes } from "date-fns";
 import { Coordinate } from "../models/coordinate";
 import { FlightPath } from "../models/flight-path";
 

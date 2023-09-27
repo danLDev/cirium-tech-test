@@ -8,6 +8,6 @@ export const GATWICK_TO_GENEVA_DIRECT = new FlightPath([GATWICK, GENEVA]);
 
 export const GATWICK_TO_GENEVA = new FlightPath([
   GATWICK,
-  new Coordinate(3.789606, 48.570988, CRUISING_HEIGHT),
+  new Coordinate(48.570988, 3.789606, CRUISING_HEIGHT),
   GENEVA,
 ]);

@@ -3,9 +3,10 @@ import { GATWICK_TO_GENEVA } from "../__mocks__/mock-flight-paths";
 import { addMinutes, subMinutes } from "date-fns";
 import { isFlightWithinAirspace } from "../utils/is-flight-within-airspace";
 import { AIRSPACE_OVER_FRANCE } from "../__mocks__/mock-airspaces";
-import { GATWICK, GENEVA } from "../__mocks__/mock-aerodromes";
+import { COPENHAGEN, GATWICK, GENEVA } from "../__mocks__/mock-aerodromes";
 import { Coordinate } from "../models/coordinate";
 import { FlightPath } from "../models/flight-path";
+import { writeToGeojsonCollection } from "../utils/write-to-geogjson-collection";
 
 describe("isFlightWithinAirspace", () => {
   it("Should detect a flight which is currently within the airspace", () => {
@@ -38,7 +39,25 @@ describe("isFlightWithinAirspace", () => {
     const flight = new Flight(path, departure.getTime());
 
     // Force the flight to depart early so we don't have to mess with time mocks
-    flight.depart(subMinutes(departure, 15).getTime());
+    flight.depart(subMinutes(departure, 10).getTime());
+
+    expect(isFlightWithinAirspace(flight, AIRSPACE_OVER_FRANCE)).toBe(false);
+  });
+
+  it("Should not detect a flight doesnt go through any airspace", () => {
+    const departure = new Date();
+
+    const path = new FlightPath([GATWICK, COPENHAGEN]);
+
+    const flight = new Flight(path, departure.getTime());
+
+    // Force the flight to depart early so we don't have to mess with time mocks
+    flight.depart(subMinutes(departure, 10).getTime());
+
+    writeToGeojsonCollection([
+      flight.getFlightPath().toGeoJson(),
+      flight.getCurrentLocation().toGeoJson(),
+    ]);
 
     expect(isFlightWithinAirspace(flight, AIRSPACE_OVER_FRANCE)).toBe(false);
   });

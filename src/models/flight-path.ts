@@ -14,7 +14,7 @@ type FlightPathLeg = {
 export class FlightPath {
   private legs: FlightPathLeg[];
 
-  constructor(waypoints: FlightWaypoint[]) {
+  constructor(private waypoints: FlightWaypoint[]) {
     this.legs = this.calculateFlightLegs(waypoints);
   }
 
@@ -37,6 +37,9 @@ export class FlightPath {
     return legs;
   }
 
+  public getWaypoints() {
+    return this.waypoints;
+  }
   public getLegs() {
     return this.legs;
   }
@@ -89,6 +92,8 @@ export class FlightPath {
 
         break;
       }
+
+      travelledDistance = newTravelledDistance;
     }
 
     if (!currentWaypoint) {
@@ -96,5 +101,20 @@ export class FlightPath {
     }
 
     return currentWaypoint;
+  }
+
+  public toGeoJson() {
+    return {
+      type: "Feature",
+      properties: {},
+      geometry: {
+        type: "LineString",
+        coordinates: this.waypoints.map((w) => [
+          w.getLng(),
+          w.getLat(),
+          w.getElevation(),
+        ]),
+      },
+    };
   }
 }

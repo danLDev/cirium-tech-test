@@ -57,9 +57,12 @@ export const getPointBetweenCoordinatesAtDistance = (
   const elev1 = coord1.getElevation();
   const elev2 = coord2.getElevation();
 
-  const isAscending = elev2 >= elev1;
-
-  const elev = (distance / distanceFrom1To2) * (isAscending ? elev2 : elev1);
+  // If we are level, use the same elevation as coord1,
+  // otherwise calculate elevation as a percentage of ascenscion/descension
+  const elev =
+    elev2 === elev1
+      ? elev1
+      : (distance / distanceFrom1To2) * (elev2 >= elev1 ? elev2 : elev1);
 
   return new Coordinate(lat3Deg, lng3Deg, elev);
 };

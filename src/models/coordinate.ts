@@ -33,4 +33,15 @@ export class Coordinate {
   public getElevation() {
     return this.elevation;
   }
+
+  public toGeoJson() {
+    return {
+      type: "Feature",
+      properties: {},
+      geometry: {
+        type: "Point",
+        coordinates: [this.lng, this.lat, this.elevation],
+      },
+    };
+  }
 }

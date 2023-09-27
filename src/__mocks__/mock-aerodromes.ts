@@ -8,3 +8,10 @@ export const GATWICK = new Aerodrome(
 );
 
 export const GENEVA = new Aerodrome(46.237, 6.1091, 3.90144, "Geneva Airport");
+
+export const COPENHAGEN = new Aerodrome(
+  55.6121,
+  12.6477,
+  0.005,
+  "Copenhagen Airport"
+);
